@@ -41,6 +41,35 @@ export class UserService {
     return this.userRepository.find({});
   }
 
+  async check(body: { userName: string; password: string }) {
+    try {
+      const data = await this.userRepository.find({
+        where: {
+          userName: body.userName,
+          password: body.password,
+        },
+      });
+
+      if (!data || !data.length) {
+        return {
+          success: false,
+          msg: '账号不存在或者密码错误',
+        };
+      }
+
+      return {
+        success: true,
+        data,
+        msg: '登录成功',
+      };
+    } catch (e) {
+      return {
+        success: false,
+        msg: e,
+      };
+    }
+  }
+
   findOne(id: number) {
     return `This action returns a #${id} user`;
   }

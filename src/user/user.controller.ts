@@ -25,6 +25,15 @@ export class UserController {
     return this.userService.findAll();
   }
 
+  /**
+   * 验证账号密码是否正确
+   * @returns
+   */
+  @Post('check')
+  check(@Body() body: { userName: string; password: string }) {
+    return this.userService.check(body);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.userService.findOne(+id);
