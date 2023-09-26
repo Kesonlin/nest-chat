@@ -21,7 +21,7 @@ export class UserService {
       if (data && data.length > 0) {
         return {
           success: false,
-          mas: '用户已经存在！',
+          msg: '用户已经存在！',
         };
       }
       await this.userRepository.save(createUserDto);
