@@ -48,5 +48,5 @@ jobs:
             unzip chat_nest.zip
             cd /www/wwwroot/chat_nest
             pnpm i
-#            pm2 start ./src/main.js
             pnpm run start
+         # pm2 start ./src/main.js
