@@ -9,18 +9,18 @@ import { Message } from 'entities/Message';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: '1234',
-      database: 'nest-chat',
-      logging: true,
-      entities: [Userinfo, Message],
-      // 如果配置了 synchronize，还会生成建表 sql 语句来创建表。
-      synchronize: true,
-    }),
+    // TypeOrmModule.forRoot({
+    //   type: 'mysql',
+    //   host: 'localhost',
+    //   port: 3306,
+    //   username: 'root',
+    //   password: '1234',
+    //   database: 'nest-chat',
+    //   logging: true,
+    //   entities: [Userinfo, Message],
+    //   // 如果配置了 synchronize，还会生成建表 sql 语句来创建表。
+    //   synchronize: true,
+    // }),
     UserModule,
     SocketModule,
   ],
