@@ -10,28 +10,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      # - name: Checkout
+      #   uses: actions/checkout@v2
 
-      - name: use node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
+      # - name: use node
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: 16
 
-      - name: Setup PNPM
-        uses: pnpm/action-setup@v2
-        with:
-          version: 7.18.1
+      # - name: Setup PNPM
+      #   uses: pnpm/action-setup@v2
+      #   with:
+      #     version: 7.18.1
 
-      - name: check pnpm
-        run: pnpm --version
+      # - name: check pnpm
+      #   run: pnpm --version
 
-        # 步骤5 部署项目
+      # 步骤5 部署项目
       - name: deploy
         uses: cross-the-world/ssh-scp-ssh-pipelines@latest
         env:
-            WELCOME: "ssh scp ssh pipelines"
-            LASTSSH: "Doing something after copying"
+          WELCOME: 'ssh scp ssh pipelines'
+          LASTSSH: 'Doing something after copying'
         with:
           host: ${{ secrets.HOST }}
           user: ${{ secrets.USER }}
@@ -39,6 +39,7 @@ jobs:
           # port: ${{ secrets.TX_PORT }}
           connect_timeout: 20s
           first_ssh: |
+            sudo su
             rm -rf /www/wwwroot/chat_nest
             mkdir -p /www/wwwroot/chat_nest
           scp: |
@@ -49,4 +50,4 @@ jobs:
             cd /www/wwwroot/chat_nest
             pnpm i
             pnpm run start
-         # pm2 start ./src/main.js
+          # pm2 start ./src/main.js
