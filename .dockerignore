@@ -1,0 +1,15 @@
+*.md
+!README.md
+# \*.md 就是忽略所有 md 结尾的文件，然后 
+# !README.md 就是其中不包括 README.md
+dist
+.git/
+.vscode/
+.DS_Store
+node_modules/
+[a-c].txt
+.dockerignore
+.eslintignore
+.eslintrc
+.prettierrc
+.prettierignore
