@@ -26,19 +26,27 @@ jobs:
       - name: check pnpm
         run: pnpm --version
 
-      - name: install
-        run: pnpm install
-
-      - name: run node
-        run: pnpm run start
-
         # 步骤5 部署项目
       - name: deploy
-        uses: JamesIves/github-pages-deploy-action@4.1.6
+        uses: cross-the-world/ssh-scp-ssh-pipelines@latest
+        env:
+            WELCOME: "ssh scp ssh pipelines"
+            LASTSSH: "Doing something after copying"
         with:
-          # 供用户访问的github access_token 下面的变量是在准备阶段自定义的变量
-          access_token: ${{ secrets.access_token }}
-          # 发布到指定分支
-          branch: gh-pages
-          # 指定发布的打包后的文件
-          # folder: xx/xxx/xx
+          host: ${{ secrets.HOST }}
+          user: ${{ secrets.USER }}
+          pass: ${{ secrets.PASS }}
+          # port: ${{ secrets.TX_PORT }}
+          connect_timeout: 20s
+          first_ssh: |
+            rm -rf /www/wwwroot/chat_nest
+            mkdir -p /www/wwwroot/chat_nest
+          scp: |
+            'chat_nest.zip' => /www/wwwroot/chat_nest
+          last_ssh: |
+            cd /www/wwwroot/chat_nest
+            unzip chat_nest.zip
+            cd /www/wwwroot/chat_nest
+            pnpm i
+#            pm2 start ./src/main.js
+            pnpm run start
