@@ -19,5 +19,8 @@ jobs:
           node-version: 16
           package-manager: pnpm
 
+      - name: check pnpm
+        run: pnpm --version
+
       - name: install
         run: pnpm install
