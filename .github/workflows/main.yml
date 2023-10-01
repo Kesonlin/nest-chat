@@ -69,6 +69,6 @@ jobs:
             whoami
             ls -al
           SCRIPT_AFTER: |
-            whoami
-            ls -al
+            pnpm install
+            pnpm run start
             echo $RSYNC_STDOUT
