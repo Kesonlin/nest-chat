@@ -53,7 +53,7 @@ jobs:
       #     # pm2 start ./src/main.js
       - name: test
         run: |
-          ls /home/runner/work/nest-chat/nest-chat/
+          ls /home/runner/work/nest-chat
 
       - name: Deploy to Staging server
         uses: easingthemes/ssh-deploy@main
