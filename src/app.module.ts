@@ -7,15 +7,17 @@ import { Userinfo } from 'entities/Userinfo';
 import { SocketModule } from './socket/socket.module';
 import { Message } from 'entities/Message';
 
+console.log(process.env.PASS, 'process.env.PASS');
+
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
+      host: '101.42.172.229',
       port: 3306,
       username: 'root',
-      password: '1234',
-      database: 'nest-chat',
+      password: process.env.PASS,
+      database: 'chat_nest',
       logging: true,
       entities: [Userinfo, Message],
       // 如果配置了 synchronize，还会生成建表 sql 语句来创建表。112233
