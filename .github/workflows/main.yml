@@ -69,6 +69,8 @@ jobs:
             whoami
             ls -al
           SCRIPT_AFTER: |
-            pnpm install
-            pnpm run start
+            ls
+            cd /www/wwwroot/chat_nest
+            sudo pnpm install
+            sudo pnpm run start
             echo $RSYNC_STDOUT
