@@ -20,7 +20,7 @@ console.log(process.env.PASS, 'process.env.PASS');
       database: 'chat_nest',
       logging: true,
       entities: [Userinfo, Message],
-      // 如果配置了 synchronize，还会生成建表 sql 语句来创建表。112233
+      // 如果配置了 synchronize，还会生成建表 sql 语句来创建表。112233 部署成功了
       synchronize: true,
     }),
     UserModule,
