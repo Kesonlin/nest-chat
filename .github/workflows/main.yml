@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # - name: Checkout
-      #   uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
       # - name: use node
       #   uses: actions/setup-node@v3
@@ -51,16 +51,20 @@ jobs:
       #       pnpm i
       #       pnpm run start
       #     # pm2 start ./src/main.js
+      - name: test
+        run: |
+          ls /home/runner/work/nest-chat/nest-chat
+
       - name: Deploy to Staging server
         uses: easingthemes/ssh-deploy@main
         with:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          ARGS: '-rlgoDzvc -i'
-          SOURCE: 'dist/'
+          ARGS: '-rlgoDzvc --delete'
+          # SOURCE: './'
           REMOTE_HOST: ${{ secrets.HOST }}
           REMOTE_USER: ${{ secrets.USER }}
           TARGET: '/www/wwwroot/chat_nest'
-          EXCLUDE: '/dist/, /node_modules/'
+          EXCLUDE: '.gitignore'
           SCRIPT_BEFORE: |
             whoami
             ls -al
