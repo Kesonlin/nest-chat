@@ -13,18 +13,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      # - name: use node
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: 16
+      - name: use node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
 
-      # - name: Setup PNPM
-      #   uses: pnpm/action-setup@v2
-      #   with:
-      #     version: 7.18.1
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7.18.1
 
-      # - name: check pnpm
-      #   run: pnpm --version
+      - name: install and build
+        run: |
+          pnpm install
+          pnpm run build
 
       # 步骤5 部署项目
       # - name: deploy
@@ -60,7 +62,7 @@ jobs:
         with:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           ARGS: '-rlgoDzvc --delete'
-          # SOURCE: './'
+          SOURCE: 'dist/'
           REMOTE_HOST: ${{ secrets.HOST }}
           REMOTE_USER: ${{ secrets.USER }}
           TARGET: '/www/wwwroot/chat_nest'
@@ -71,6 +73,4 @@ jobs:
           SCRIPT_AFTER: |
             ls
             cd /www/wwwroot/chat_nest
-            sudo pnpm install
-            sudo pnpm run start
             echo $RSYNC_STDOUT
