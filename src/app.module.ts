@@ -13,11 +13,13 @@ console.log(process.env.PASS, 'process.env.PASS');
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: '101.42.172.229',
+      // host: '101.42.172.229',
+      host: 'localhost',
       port: 3306,
       username: 'root',
-      password: process.env.PASS,
-      database: 'chat_nest',
+      // password: process.env.PASS,
+      password: '1234',
+      database: 'nest-chat',
       logging: true,
       entities: [Userinfo, Message],
       // 如果配置了 synchronize，还会生成建表 sql 语句来创建表。112233 部署成功了
