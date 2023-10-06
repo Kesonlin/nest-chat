@@ -1,17 +1,25 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
-// import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Userinfo } from 'entities/Userinfo';
+import { promises as fs } from 'fs';
 
 @Injectable()
 export class UserService {
   @InjectRepository(Userinfo)
   private userRepository: Repository<Userinfo>;
 
-  async create(createUserDto: CreateUserDto) {
-    console.log('createUserDto', createUserDto);
+  async create(createUserDto: CreateUserDto, avatar: Express.Multer.File) {
+    // console.log('createUserDto', createUserDto);
+    // console.log('avatar', avatar);
+    // const upload = multer({ dest: 'uploads/' })
+    // multer.diskStorage({
+    //   destination: 'src/upload',
+    //   filename: (req, file, cb) => {
+    //     cb(null, 'avatar-' + avatar.originalname);
+    //   },
+    // });
     try {
       const data = await this.userRepository.find({
         where: {
@@ -24,12 +32,34 @@ export class UserService {
           msg: '用户已经存在！',
         };
       }
-      await this.userRepository.save(createUserDto);
+
+      if (avatar) {
+        const filePath =
+          'src/upload/' + createUserDto.userName + avatar.originalname;
+        await fs.writeFile(filePath, avatar.buffer);
+      }
+
+      await this.userRepository.save({
+        ...createUserDto,
+        avatar: avatar
+          ? '/' + createUserDto.userName + avatar.originalname
+          : 'default.jpg',
+      });
+
       return {
         success: true,
-        data: createUserDto,
+        data: {
+          ...createUserDto,
+          avatar:
+            'http:127.0.0.1:3000/' +
+            (avatar
+              ? '/' + createUserDto.userName + avatar?.originalname
+              : 'default.jpg'),
+        },
       };
     } catch (e) {
+      console.log(e);
+
       return {
         success: false,
         msg: e,
@@ -73,10 +103,6 @@ export class UserService {
   findOne(id: number) {
     return `This action returns a #${id} user`;
   }
-
-  // update(id: number, updateUserDto: UpdateUserDto) {
-  //   return `This action updates a #${id} user`;
-  // }
 
   remove(id: number) {
     return `This action removes a #${id} user`;
