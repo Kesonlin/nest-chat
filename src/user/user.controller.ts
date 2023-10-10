@@ -38,7 +38,12 @@ export class UserController {
     @Body() createUserDto: CreateUserDto,
     @UploadedFile() avatar: Express.Multer.File,
   ) {
-    // console.log(avatar);
+    // console.log(
+    //   'createUserDto',
+    //   JSON.stringify(createUserDto),
+    //   'avatar',
+    //   avatar,
+    // );
 
     return this.userService.create(createUserDto, avatar);
   }

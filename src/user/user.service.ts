@@ -41,6 +41,7 @@ export class UserService {
 
       await this.userRepository.save({
         ...createUserDto,
+        createTime: new Date().toJSON(),
         avatar: avatar
           ? '/' + createUserDto.userName + avatar.originalname
           : 'default.jpg',
@@ -67,8 +68,15 @@ export class UserService {
     }
   }
 
-  findAll() {
-    return this.userRepository.find({});
+  async findAll() {
+    const data = await this.userRepository.find({});
+
+    return data.map((v) => {
+      return {
+        ...v,
+        avatar: 'http://10.0.2.2:3000/' + v.avatar,
+      };
+    });
   }
 
   async check(body: { userName: string; password: string }) {
@@ -89,7 +97,10 @@ export class UserService {
 
       return {
         success: true,
-        data,
+        data: {
+          ...data[0],
+          avatar: 'http://10.0.2.2:3000/' + data[0].avatar,
+        },
         msg: '登录成功',
       };
     } catch (e) {
