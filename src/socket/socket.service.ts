@@ -38,7 +38,9 @@ export class SocketService {
       success: true,
       msg: '查询成功！',
       data: {
-        list: [...r1, ...r2].sort((a: Message, b: Message) => a.id - b.id),
+        list: [...r1, ...r2].sort(
+          (a: Message, b: Message) => parseInt(a.id) - parseInt(b.id),
+        ),
       },
     };
   }

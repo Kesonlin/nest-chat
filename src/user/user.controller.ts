@@ -9,6 +9,7 @@ import {
   UseInterceptors,
   UploadedFile,
   UseGuards,
+  Request,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -63,6 +64,16 @@ export class UserController {
   @Post('check')
   check(@Body() body: { userName: string; password: string }) {
     return this.userService.check(body);
+  }
+  /**
+   * 更新用户信息
+   */
+  @Post('update')
+  @UseGuards(LoginGuard)
+  update(@Body() body: any, @Request() request) {
+    console.log(request.user);
+
+    return this.userService.update(body, request.user);
   }
 
   @Get(':id')

@@ -25,4 +25,13 @@ export class Userinfo {
     comment: "创建时间",
   })
   createTime: Date | null;
+
+  @Column("varchar", {
+    name: "recentText",
+    nullable: true,
+    comment: "个性签名",
+    length: 255,
+    default: () => "'nice to meet you!'",
+  })
+  recentText: string | null;
 }

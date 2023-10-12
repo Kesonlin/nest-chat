@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, UseGuards } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -6,6 +6,7 @@ import { Userinfo } from 'entities/Userinfo';
 import { promises as fs } from 'fs';
 import { md5 } from 'src/utils';
 import { JwtService } from '@nestjs/jwt';
+import { LoginGuard } from 'src/guard/loginGuard';
 
 @Injectable()
 export class UserService {
@@ -120,7 +121,43 @@ export class UserService {
         data: {
           ...data[0],
           avatar: 'http://10.0.2.2:3000/' + data[0].avatar,
-          token,
+          token: 'bearer ' + token,
+        },
+      };
+    } catch (e) {
+      console.log(e);
+
+      return {
+        success: false,
+        msg: e,
+      };
+    }
+  }
+
+  async update(body, userInfo) {
+    const data = await this.userRepository.find({
+      where: {
+        userName: userInfo.userName,
+        id: userInfo.id,
+      },
+    });
+
+    if (!data || !data.length) {
+      return {
+        success: false,
+        msg: '用户不存在或者token过期',
+      };
+    }
+
+    try {
+      await this.userRepository.update(userInfo.id, { ...body });
+
+      return {
+        success: true,
+        data: {
+          ...data[0],
+          recentText: body.recentText,
+          avatar: 'http://10.0.2.2:3000/' + data[0].avatar,
         },
       };
     } catch (e) {
