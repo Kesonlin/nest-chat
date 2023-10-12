@@ -8,10 +8,12 @@ import {
   Delete,
   UseInterceptors,
   UploadedFile,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { LoginGuard } from 'src/guard/loginGuard';
 // import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('user')
@@ -49,6 +51,7 @@ export class UserController {
   }
 
   @Get('all')
+  // @UseGuards(LoginGuard)
   findAll() {
     return this.userService.findAll();
   }

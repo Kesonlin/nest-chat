@@ -8,6 +8,7 @@ import { Userinfo } from 'entities/Userinfo';
 import { SocketModule } from './socket/socket.module';
 import { Message } from 'entities/Message';
 import { join } from 'path';
+import { JwtModule } from '@nestjs/jwt';
 
 console.log(process.env.PASS, 'process.env.PASS');
 
@@ -22,14 +23,23 @@ console.log(process.env.PASS, 'process.env.PASS');
       // password: process.env.PASS,
       password: '1234',
       database: 'nest-chat',
-      logging: true,
+      logging: false,
       entities: [Userinfo, Message],
       // 如果配置了 synchronize，还会生成建表 sql 语句来创建表。112233 部署成功了
       synchronize: false,
     }),
+    // 静态资源加载
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'upload'),
       // serveStaticOptions: { index: false },
+    }),
+    JwtModule.register({
+      global: true,
+      secret: 'lhr',
+      // 过期时间
+      signOptions: {
+        expiresIn: '7d',
+      },
     }),
     UserModule,
     SocketModule,
