@@ -10,6 +10,7 @@ import { Message } from 'entities/Message';
 import { join } from 'path';
 import { JwtModule } from '@nestjs/jwt';
 import { Moments } from 'entities/Moments';
+import { MomentModule } from './moment/moment.module';
 
 console.log(process.env.PASS, 'process.env.PASS');
 
@@ -44,6 +45,7 @@ console.log(process.env.PASS, 'process.env.PASS');
     }),
     UserModule,
     SocketModule,
+    MomentModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -6,7 +6,6 @@ import { Userinfo } from 'entities/Userinfo';
 import { promises as fs } from 'fs';
 import { md5 } from 'src/utils';
 import { JwtService } from '@nestjs/jwt';
-import { LoginGuard } from 'src/guard/loginGuard';
 
 @Injectable()
 export class UserService {
