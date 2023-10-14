@@ -9,6 +9,7 @@ import { SocketModule } from './socket/socket.module';
 import { Message } from 'entities/Message';
 import { join } from 'path';
 import { JwtModule } from '@nestjs/jwt';
+import { Moments } from 'entities/Moments';
 
 console.log(process.env.PASS, 'process.env.PASS');
 
@@ -24,7 +25,7 @@ console.log(process.env.PASS, 'process.env.PASS');
       password: '1234',
       database: 'nest-chat',
       logging: false,
-      entities: [Userinfo, Message],
+      entities: [Userinfo, Message, Moments],
       // 如果配置了 synchronize，还会生成建表 sql 语句来创建表。112233 部署成功了
       synchronize: false,
     }),

@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Moments } from "./Moments";
 
 @Entity("userinfo", { schema: "nest-chat" })
 export class Userinfo {
@@ -34,4 +35,7 @@ export class Userinfo {
     default: () => "'nice to meet you!'",
   })
   recentText: string | null;
+
+  @OneToMany(() => Moments, (moments) => moments.owner)
+  moments: Moments[];
 }
