@@ -19,10 +19,13 @@ export default class MomentService {
         const { owner, ...ret } = item;
         return {
           ...ret,
+          photo: serveUrl + ret.photo,
           userName: owner.userName,
           avatar: serveUrl + owner.avatar,
         };
       });
+
+      finalData.sort((a, b) => b.id - a.id);
       return {
         success: true,
         data: finalData,

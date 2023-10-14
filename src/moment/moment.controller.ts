@@ -17,7 +17,7 @@ export default class MomentController {
   constructor(private readonly momentService: MomentService) {}
 
   @Get('get')
-  //   @UseGuards(LoginGuard)
+  @UseGuards(LoginGuard)
   find() {
     return this.momentService.find();
   }
