@@ -3,6 +3,7 @@ import {
   ExecutionContext,
   Inject,
   Injectable,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
@@ -20,8 +21,9 @@ export class LoginGuard implements CanActivate {
 
     if (!bearer || bearer.length < 2) {
       console.log('eeee');
-
-      return false;
+      // 抛出未授权的错误
+      throw new UnauthorizedException();
+      // return false;
     }
 
     const token = bearer[1];
@@ -33,7 +35,6 @@ export class LoginGuard implements CanActivate {
       return true;
     } catch (e) {
       console.log(e);
-
       return false;
     }
   }
