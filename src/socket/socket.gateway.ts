@@ -21,10 +21,17 @@ export class SocketGateway {
 
   @SubscribeMessage('connection')
   create(@MessageBody() body: any, @ConnectedSocket() client: any) {
+    console.log('conncet');
+
     client.emit('join', () => {
       client.join('lin');
     });
     // return { event: 'join', data: '服务端推送到客户端' };
+  }
+
+  @SubscribeMessage('disconnect')
+  disconnect() {
+    console.log('socket close');
   }
 
   @SubscribeMessage('sendMessage')
@@ -35,8 +42,8 @@ export class SocketGateway {
     console.log('sendMessage', body);
     this.socketService.create(body);
     // 广播的话自己收不到
-    // client.broadcast.emit('showMessage', `boradcast ${body}`);
-    this.server.to('lin').emit('showMessage', body.message);
+    client.broadcast.emit('showMessage');
+    // this.server.to('lin').emit('showMessage', body.message);
     client.emit('showMessage', body);
   }
 }

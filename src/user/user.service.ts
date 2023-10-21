@@ -103,7 +103,7 @@ export class UserService {
       if (data[0].password !== md5(body.password)) {
         return {
           success: false,
-          mag: '密码错误',
+          msg: '密码错误',
         };
       }
 
